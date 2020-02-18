@@ -34,7 +34,7 @@ class BurgerBuilder extends Component {
       .get("/ingredients.json")
       .then(res => {
         this.setState({ ingredients: res.data });
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch(er => {
         this.setState({ error: true });
@@ -134,7 +134,7 @@ class BurgerBuilder extends Component {
     }
     let orderSummary = null;
     let burger = this.state.error ? (
-      "<p>Ingredients can not be loaded!</p>"
+      "<p>Ingredients can not be loaded! </p>"
     ) : (
       <Spinner />
     );
