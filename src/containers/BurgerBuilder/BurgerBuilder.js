@@ -41,7 +41,7 @@ class BurgerBuilder extends Component {
         console.log(er);
       })
       .finally(final => {
-        console.log(final);
+        // console.log(final);
       });
   }
 
@@ -97,32 +97,46 @@ class BurgerBuilder extends Component {
 
   purchaseContinueHandler = () => {
     // alert('You continue!');
-    this.setState({ loading: true });
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.price,
-      customar: {
-        name: "Rajat",
-        address: {
-          street: "street 1",
-          zipCode: "234567",
-          country: "US"
-        },
-        email: "test@test.com"
-      },
-      deliveryMethod: "fastest"
-    };
-    axios
-      .post("/orders.json", order)
-      .then(res => {
-        console.log(res);
-      })
-      .catch(er => {
-        console.log(er);
-      })
-      .finally(final => {
-        this.setState({ loading: false, purchasing: false });
-      });
+    // this.setState({ loading: true });
+    // const order = {
+    //   ingredients: this.state.ingredients,
+    //   price: this.state.price,
+    //   customar: {
+    //     name: "Rajat",
+    //     address: {
+    //       street: "street 1",
+    //       zipCode: "234567",
+    //       country: "US"
+    //     },
+    //     email: "test@test.com"
+    //   },
+    //   deliveryMethod: "fastest"
+    // };
+    // axios
+    //   .post("/orders.json", order)
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(er => {
+    //     console.log(er);
+    //   })
+    //   .finally(final => {
+    //     this.setState({ loading: false, purchasing: false });
+    //   });
+    const queryParams = [];
+    for (let i in this.state.ingredients) {
+      queryParams.push(
+        encodeURIComponent(i) +
+          "=" +
+          encodeURIComponent(this.state.ingredients[i])
+      );
+    }
+    const queryString = queryParams.join("&");
+    this.props.history.push({
+      pathname: "/checkout",
+      search: "?" + queryString
+    });
+    // this.props.history.push("/checkout");
   };
 
   render() {
