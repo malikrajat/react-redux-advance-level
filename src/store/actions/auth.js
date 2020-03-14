@@ -7,10 +7,11 @@ export const authStart = () => {
   };
 };
 
-export const authSuccess = authData => {
+export const authSuccess = (idToken, userId) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
-    authData: authData
+    idToken,
+    userId
   };
 };
 
@@ -18,6 +19,18 @@ export const authFail = error => {
   return {
     type: actionTypes.AUTH_FAIL,
     error: error
+  };
+};
+export const logout = () => {
+  return {
+    type: actionTypes.AUTH_LOGOUT
+  };
+};
+export const checkAuthTimeout = time => {
+  return dispatch => {
+    setTimeout(() => {
+      dispatch(logout());
+    }, time);
   };
 };
 
@@ -43,7 +56,7 @@ export const auth = (email, password, isSignup) => {
       })
       .catch(err => {
         console.log(err);
-        dispatch(authFail(err));
+        dispatch(authFail(err.response.data.error));
       });
   };
 };
